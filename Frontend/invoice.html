@@ -1,0 +1,165 @@
+<!-- Invoice HTML File -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Now Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f4f4f4, #dfe9f3);
+        }
+        .card {
+            display: flex;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            overflow: hidden;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .card img {
+            width: 40%;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .card-content p {
+            margin: 10px 0;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+        .invoice-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: background-color 0.3s ease;
+        }
+        .invoice-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div id="confirmation-page">
+    <div class="card">
+        <img id="painting-image" src="" alt="Painting Image">
+        <div class="card-content">
+            <p>Painting: <span id="painting-name"></span></p>
+            <p>Artist: <span id="artist-name"></span></p>
+            <p><span class="highlight">SOLD</span> to <span id="customer-name"></span></p>
+            <p>Price: <span id="price-invoice"></span></p>
+            <button class="invoice-button" onclick="downloadInvoice()">Download Invoice</button>
+        </div>
+    </div>
+</div>
+<script>
+    // Retrieve query parameters and set values dynamically
+    const urlParams = new URLSearchParams(window.location.search);
+    const artist = urlParams.get('artist');
+    const customer = urlParams.get('customer');
+    const price = urlParams.get('price');
+    const imageUrl = urlParams.get('imageUrl');
+
+    document.getElementById('artist-name').textContent = artist;
+    document.getElementById('customer-name').textContent = customer;
+    document.getElementById('price-invoice').textContent = `$${price}`;
+    document.getElementById('painting-image').src = imageUrl;
+    document.getElementById('painting-name').textContent = `Painting by ${artist}`;
+
+       async function downloadInvoice() {
+        const { jsPDF } = window.jspdf; // Ensure correct jsPDF reference
+
+        const invoiceNumber = Math.floor(1000 + Math.random() * 9000);
+        const doc = new jsPDF();
+
+        const customerName = customer;
+        const totalPrice = parseFloat(price);
+        const tax = totalPrice * 0.1;
+        const totalAmount = totalPrice + tax;
+
+        doc.setFontSize(18);
+        doc.text("INVOICE", 105, 20, { align: "center" });
+
+        doc.setLineWidth(0.5);
+        doc.line(20, 25, 190, 25);
+
+        let startY = 30;
+        doc.setFontSize(12);
+        doc.text("Seller Information", 20, startY);
+        startY += 5;
+        const sellerData = [
+            ["Name:", "SRH Gallery"],
+            ["Address:", "36 Terrick Rd, Ellington PE18 2NT, UK"]
+        ];
+        doc.autoTable({
+            startY: startY,
+            head: [["", ""]],
+            body: sellerData,
+            theme: 'grid',
+            styles: { fontSize: 10 }
+        });
+        startY = doc.lastAutoTable.finalY + 5;
+
+        const customerData = [
+            ["Bill To:", customerName],
+            ["Invoice No:", invoiceNumber],
+            ["Issue Date:", new Date().toLocaleDateString()]
+        ];
+        doc.autoTable({
+            startY: startY,
+            head: [["", ""]],
+            body: customerData,
+            theme: 'grid',
+            styles: { fontSize: 10 }
+        });
+        startY = doc.lastAutoTable.finalY + 5;
+
+        const itemsData = [
+            ["DESCRIPTION", "QUANTITY", "UNIT PRICE ($)", "AMOUNT ($)"],
+            [`Painting by ${artist}`, "1", totalPrice.toFixed(2), totalPrice.toFixed(2)],
+            ["TAX (10%)", "", "", tax.toFixed(2)],
+            ["TOTAL (USD)", "", "", totalAmount.toFixed(2)]
+        ];
+        doc.autoTable({
+            startY: startY,
+            body: itemsData,
+            theme: 'grid',
+            styles: { fontSize: 10 }
+        });
+
+        startY = doc.lastAutoTable.finalY + 10;
+        doc.setFontSize(10);
+        doc.text("Thank you for your purchase!", 105, startY, { align: "center" });
+
+        doc.save("invoice.pdf");
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+</body>
+</html>

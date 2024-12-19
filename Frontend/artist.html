@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+    .topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 50%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Artist Grid */
+    .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px; /* Reduced gap */
+    }
+
+    .artist-img {
+      width: 400px; /* Increased size */
+      height: 500px; /* Increased size */
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .artist-img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Artist Card */
+    .artist-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      width: 80%;
+      max-width: 800px;
+      padding: 20px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .card-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .card-content img {
+      width: 250px; /* Increased size */
+      height: 250px; /* Increased size */
+      border-radius: 10px;
+    }
+
+    .artist-info {
+      flex: 1;
+    }
+
+    .artist-info h2 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+
+    .artist-info p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .painting-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .painting-grid img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Close Button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #f00;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .footer {
+            background-color: black; /* Black background */
+            color: white; /* White text */
+            padding: 20px 0; /* Spacing */
+            text-align: center; /* Center text alignment */
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto; /* Center the content */
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping for responsiveness */
+            justify-content: space-between; /* Spread items evenly */
+            align-items: center;
+        }
+
+        /* Section for trademark */
+        .footer .trademark {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Social media icons styling */
+        .social-icons {
+            display: flex;
+            gap: 15px; /* Spacing between icons */
+        }
+
+        .social-icons a {
+            color: white; /* Icon color */
+            font-size: 24px; /* Icon size */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* Change color on hover (blue) */
+        }
+
+        /* Contact details */
+        .contact {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+  </style>
+</head>
+<body>
+  
+    <header>
+      <h1>Artist</h1>
+    </header>
+    <div class="topnav">
+    <a href="addto_cart.html" class="cart">
+            <i class="fas fa-shopping-cart cart-icon"></i> 
+        </a>
+    <a href="signup.html">Sign Up</a>
+    <a href="event_bid.html">Event</a>
+    <a href="contact.html">Contact</a>
+    <a href="artist.html">Artist</a>
+    <a href="gallery_image.html">Gallery</a>
+    <a class="active" href="index.html">Home</a>
+  </div>
+    <div class="container">
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search Artist..." oninput="filterArtists()">
+    </div>
+    <div class="artist-grid" id="artist-grid">
+      <!-- Artists will be dynamically loaded here -->
+    </div>
+  </div>
+
+  <!-- Artist Details Card -->
+  <div id="artist-card" class="artist-card hidden">
+    <button class="close-btn" onclick="closeCard()">X</button>
+    <div class="card-content">
+      <img src="" alt="Artist Image" id="artist-photo">
+      <div class="artist-info">
+        <h2 id="artist-name">Artist Name</h2>
+        <p><strong>Age:</strong> <span id="artist-age">30</span></p>
+        <p><strong>Country:</strong> <span id="artist-country">USA</span></p>
+        <p><strong>Artistic Style:</strong> <span id="artist-style">Abstract</span></p>
+        <p id="artist-description">Description about the artist goes here...</p>
+      </div>
+    </div>
+    <div class="painting-grid" id="painting-grid">
+      <!-- Paintings will be dynamically loaded here -->
+    </div>
+  </div>
+  <footer class="footer">
+        <div class="footer-content">
+            <!-- Trademark Section -->
+            <div class="trademark">
+                &copy; 2024 Srh Gallery. All rights reserved.
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="mailto:yourcompany@example.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact">
+                <p>Contact: +123 456 7890 | Email: <a href="mailto:srhcompany@gmail.com" style="color: white; text-decoration: none;">srhgallery@event.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+  <script>
+    // Artist data
+    const artistData = [
+      {
+        photo: 'https://cdn.britannica.com/36/69636-050-81A93193/Self-Portrait-artist-panel-board-Vincent-van-Gogh-1887.jpg',
+        name: 'Vincent van Gogh',
+        age: 37,
+        country: 'Netherlands',
+        style: 'Post-Impressionism',
+        description: 'Vincent was a Dutch Post-Impressionist painter.',
+        paintings: [
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg'
+        ]
+      },
+      {
+        photo: 'https://cdn.britannica.com/36/69636-050-81A93193/Self-Portrait-artist-panel-board-Vincent-van-Gogh-1887.jpg',
+        name: 'Claude Monet',
+        age: 86,
+        country: 'France',
+        style: 'Impressionism',
+        description: 'Monet was a French painter and founder of Impressionism.',
+        paintings: [
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg',
+          'https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg'
+        ]
+      }
+    ];
+
+    // Load artists dynamically
+    const artistGrid = document.getElementById('artist-grid');
+    artistData.forEach((artist, index) => {
+      const img = document.createElement('img');
+      img.src = artist.photo;
+      img.alt = artist.name;
+      img.dataset.index = index;
+      img.classList.add('artist-img');
+      img.onclick = () => openCard(index);
+      artistGrid.appendChild(img);
+    });
+
+    // Filter artists
+    function filterArtists() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const images = document.querySelectorAll('.artist-img');
+      images.forEach(img => {
+        const artistIndex = img.dataset.index;
+        const artistName = artistData[artistIndex].name.toLowerCase();
+        img.style.display = artistName.includes(query) ? 'block' : 'none';
+      });
+    }
+
+    // Open artist card
+    function openCard(index) {
+      const artist = artistData[index];
+      document.getElementById('artist-photo').src = artist.photo;
+      document.getElementById('artist-name').textContent = artist.name;
+      document.getElementById('artist-age').textContent = artist.age;
+      document.getElementById('artist-country').textContent = artist.country;
+      document.getElementById('artist-style').textContent = artist.style;
+      document.getElementById('artist-description').textContent = artist.description;
+
+      const paintingGrid = document.getElementById('painting-grid');
+      paintingGrid.innerHTML = artist.paintings
+        .map(painting => `<img src="${painting}" alt="Painting">`)
+        .join('');
+
+      document.getElementById('artist-card').style.display = 'block';
+    }
+
+    // Close artist card
+    function closeCard() {
+      document.getElementById('artist-card').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* Basic styling for the dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Style for the dropdown button (smaller size) */
+        .dropbtn {
+            background-color: #333;
+            color: white;
+            padding: 4px 8px; /* Reduced padding for a smaller button */
+            font-size: 14px; /* Reduced font size */
+            border: none;
+            cursor: pointer;
+            border-radius: 4px; /* Optional, to round the corners */
+            margin-bottom: 3px;
+            margin-left: 3px;
+        }
+
+        /* Style for the dropdown content (hidden by default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 100px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 4px 8px; /* Reduced padding for a smaller button */
+            font-size: 14px; /* Reduced font size */
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 4px 8px;
+            text-decoration: none;
+            display: block;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        /* Change the background color of links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Display the dropdown content when hovering the button */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Style for the dropdown button on hover */
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px 20px;
+        }
+
+        .navbar-left {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar a {
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 17px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navbar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        /* Profile Image Styling */
+        .navbar-right img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar-right img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Card Popup Styling */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 101;
+            overflow: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column; /* Stack image and details vertically */
+            align-items: center;
+        }
+
+        .card-body img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .card-details {
+            text-align: left;
+            width: 100%;
+            padding-left: 20px;
+        }
+
+        .card-details p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .card-details input,
+        .card-details textarea {
+            width: 80%;
+            margin-top: 5px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .card-details button.edit-btn {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            position: absolute;
+            top: 180px;
+            right: 20px;
+        }
+
+        .card-details button.edit-btn:hover {
+            background-color: #e68900;
+        }
+
+        /* Hidden state for Save button */
+        .hidden {
+            display: none;
+        }
+
+        /* Highlight animation for editable fields */
+        .highlight {
+            background-color: #f0f8ff;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Container to hold the image grid */
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Style for each image box */
+        .image-box {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Center image in the box */
+        }
+
+        /* Image styling */
+        .image-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover; /* Ensures the image covers the box proportionally */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Overlay for Upload Date */
+        .upload-date {
+            position: absolute;
+            bottom: 10px;
+            left: -100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: left 0.3s ease;
+        }
+
+        /* Like Button */
+        .like-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-box:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-box:hover .upload-date {
+            left: 10px;
+        }
+
+        .image-box:hover .like-button {
+            opacity: 1;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .image-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Title -->
+    <h1>Artist Panel</h1>
+    <div class="dropdown">
+        <button class="dropbtn">Application <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content">
+            <a href="index.html">Customer</a>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <!-- Left Section: Navbar Links -->
+        <div class="navbar-left">
+            <a class="active" href="artist_panel.html">Home</a>
+            <a href="upload.html">Upload</a>
+            <a href="revenue.html">Revenue</a>
+        </div>
+        
+        <!-- Right Section: Profile Image -->
+        <div class="navbar-right">
+            <img src="https://cdn.britannica.com/36/69636-050-81A93193/Self-Portrait-artist-panel-board-Vincent-van-Gogh-1887.jpg" alt="Artist Profile" onclick="showDetails()" />
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <div class="card-body">
+            <!-- Profile Image -->
+            <img src="https://cdn.britannica.com/36/69636-050-81A93193/Self-Portrait-artist-panel-board-Vincent-van-Gogh-1887.jpg" alt="Artist Profile" />
+            <!-- Details Section -->
+            <div class="card-details">
+                <!-- Static Text Fields -->
+                <p><strong>Name:</strong> <span id="name">Jane Doe</span></p>
+                <p><strong>Age:</strong> <span id="age">29</span></p>
+                <p><strong>Artistic Style:</strong> <span id="style">Abstract</span></p>
+                <p><strong>Country:</strong> <span id="country">France</span></p>
+                <p><strong>Introduction:</strong> <span id="intro">Jane Doe is a renowned artist known for her abstract style, blending vivid colors and geometric shapes to express the complexities of modern life. Based in Paris, she has exhibited in several prestigious galleries worldwide.</span></p>
+
+                <!-- Edit Button (Placed below image, right side) -->
+                <button class="edit-btn" onclick="enableEdit()">Edit</button>
+
+                <!-- Save Button (Initially Hidden) -->
+                <button id="saveBtn" class="edit-btn hidden" onclick="saveDetails()">Save</button>
+                
+                <button onclick="closeDetails()">Close</button>
+            </div>
+        </div>
+    </div>
+
+        <div class="image-container">
+        <!-- Image 1 -->
+        <div class="image-box">
+            <img src="https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg" alt="Image 1">
+            <div class="upload-date">Uploaded on: 2024-12-05</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Image 2 -->
+        <div class="image-box">
+            <img src="https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg" alt="Image 2">
+            <div class="upload-date">Uploaded on: 2024-12-04</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Image 3 -->
+        <div class="image-box">
+            <img src="https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg" alt="Image 3">
+            <div class="upload-date">Uploaded on: 2024-12-03</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Image 4 -->
+        <div class="image-box">
+            <img src="https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg" alt="Image 4">
+            <div class="upload-date">Uploaded on: 2024-12-02</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Image 5 -->
+        <div class="image-box">
+            <img src="https://i.pinimg.com/236x/ef/26/46/ef2646b821cca54a5ad1cdfcf95d2a1a.jpg" alt="Image 5">
+            <div class="upload-date">Uploaded on: 2024-12-01</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Image 6 -->
+        <div class="image-box">
+            <img src="https://www.artfactory.in/product_pictures/CP-116.jpg" alt="Image 6">
+            <div class="upload-date">Uploaded on: 2024-11-30</div>
+            <button class="like-button"><i class="fas fa-heart"></i></button>
+        </div>
+    </div>
+
+    
+</body>
+<script>
+        // Function to show the popup
+        function showDetails() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Function to close the popup
+        function closeDetails() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Function to enable editing
+        function enableEdit() {
+            // Enable input fields for editing
+            document.getElementById('name').contentEditable = true;
+            document.getElementById('age').contentEditable = true;
+            document.getElementById('style').contentEditable = true;
+            document.getElementById('country').contentEditable = true;
+            document.getElementById('intro').contentEditable = true;
+
+            // Add a highlight class to indicate editability
+            document.getElementById('name').classList.add('highlight');
+            document.getElementById('age').classList.add('highlight');
+            document.getElementById('style').classList.add('highlight');
+            document.getElementById('country').classList.add('highlight');
+            document.getElementById('intro').classList.add('highlight');
+
+            // Change cursor to 'text' to indicate text fields can be edited
+            document.getElementById('name').style.cursor = 'text';
+            document.getElementById('age').style.cursor = 'text';
+            document.getElementById('style').style.cursor = 'text';
+            document.getElementById('country').style.cursor = 'text';
+            document.getElementById('intro').style.cursor = 'text';
+
+            // Show the "Save" button and hide the "Edit" button
+            document.getElementById('saveBtn').classList.remove('hidden');
+            document.querySelector('.edit-btn').classList.add('hidden');
+        }
+
+        // Function to save the details after editing
+        function saveDetails() {
+            // Disable input fields and stop editing
+            document.getElementById('name').contentEditable = false;
+            document.getElementById('age').contentEditable = false;
+            document.getElementById('style').contentEditable = false;
+            document.getElementById('country').contentEditable = false;
+            document.getElementById('intro').contentEditable = false;
+
+            // Remove the highlight from editable fields
+            document.getElementById('name').classList.remove('highlight');
+            document.getElementById('age').classList.remove('highlight');
+            document.getElementById('style').classList.remove('highlight');
+            document.getElementById('country').classList.remove('highlight');
+            document.getElementById('intro').classList.remove('highlight');
+
+            // Reset the cursor
+            document.getElementById('name').style.cursor = 'default';
+            document.getElementById('age').style.cursor = 'default';
+            document.getElementById('style').style.cursor = 'default';
+            document.getElementById('country').style.cursor = 'default';
+            document.getElementById('intro').style.cursor = 'default';
+
+            // Hide the "Save" button and show the "Edit" button again
+            document.getElementById('saveBtn').classList.add('hidden');
+            document.querySelector('.edit-btn').classList.remove('hidden');
+        }
+    </script>
+</html>

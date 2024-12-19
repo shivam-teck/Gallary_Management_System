@@ -1,0 +1,80 @@
+// Import required libraries
+const express = require('express');
+const mysql = require('mysql');
+const router = express.Router();
+
+// Database connection
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'rutu',
+    database: 'art_gallery'
+});
+
+db.connect(err => {
+    if (err) throw err;
+    console.log('Connected to MySQL Database');
+});
+
+// Painting Controller: Fetch all paintings
+router.get('/paintings', (req, res) => {
+    const sql = 'SELECT * FROM paintings';
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json({ paintings: results });
+    });
+});
+
+// Painting Controller: Add a new painting
+router.post('/paintings', (req, res) => {
+    const { title, artist_id, year, type, style, price } = req.body;
+    const sql = 'INSERT INTO paintings (title, artist_id, year, type, style, price) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(sql, [title, artist_id, year, type, style, price], (err, result) => {
+        if (err) throw err;
+        res.json({ message: 'Painting added successfully', id: result.insertId });
+    });
+});
+
+// Customer Controller: Add painting to cart
+router.post('/cart/add', (req, res) => {
+    const { customer_id, painting_id } = req.body;
+    const sql = 'INSERT INTO cart (customer_id, painting_id) VALUES (?, ?)';
+    db.query(sql, [customer_id, painting_id], (err, result) => {
+        if (err) throw err;
+        res.json({ message: 'Painting added to cart', cart_id: result.insertId });
+    });
+});
+
+// Likes Controller: Like a painting
+router.post('/paintings/:id/like', (req, res) => {
+    const painting_id = req.params.id;
+    const sql = 'UPDATE paintings SET likes = likes + 1 WHERE id = ?';
+    db.query(sql, [painting_id], (err, result) => {
+        if (err) throw err;
+        res.json({ message: 'Painting liked successfully' });
+    });
+});
+
+// Bidding Event: Create a bidding event
+router.post('/bidding', (req, res) => {
+    const { painting_id, starting_price, end_time } = req.body;
+    const sql = 'INSERT INTO bidding_events (painting_id, starting_price, end_time) VALUES (?, ?, ?)';
+    db.query(sql, [painting_id, starting_price, end_time], (err, result) => {
+        if (err) throw err;
+        res.json({ message: 'Bidding event created', event_id: result.insertId });
+    });
+});
+
+// Bidding Controller: Place a bid
+router.post('/bidding/:id/bid', (req, res) => {
+    const event_id = req.params.id;
+    const { bidder_id, bid_amount } = req.body;
+    const sql = 'INSERT INTO bids (event_id, bidder_id, bid_amount) VALUES (?, ?, ?)';
+    db.query(sql, [event_id, bidder_id, bid_amount], (err, result) => {
+        if (err) throw err;
+        res.json({ message: 'Bid placed successfully', bid_id: result.insertId });
+    });
+});
+
+// Export the router
+module.exports = router;

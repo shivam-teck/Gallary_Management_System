@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar a {
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 17px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navbar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        /* Revenue Section */
+        .revenue-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .revenue-section h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        /* Vertical Card Layout */
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 1000px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            padding: 20px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .card img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .card .content {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .card .description {
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card .date {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .card .earnings {
+            font-size: 16px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Price Section */
+        .card .price {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .card .price label {
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .card .price span {
+            font-size: 18px;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        /* Total Section */
+        .total-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: right;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .total-section span {
+            color: #28a745;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <!-- Left Section: Navbar Links -->
+        <div class="navbar-left">
+            <a class="active" href="artist_panel.html">Home</a>
+            <a href="upload.html">Upload</a>
+            <a href="revenue.html">Revenue</a>
+        </div>
+    </div>
+
+    <div class="revenue-section">
+        <h1>Revenue</h1>
+        <!-- Vertical card container -->
+        <div class="card-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <img src="https://cdn11.bigcommerce.com/s-x49po/images/stencil/1500x1500/products/53748/278564/1597822081687_3F0B80FD-E8B6-4C06-B93C-A7F06EA3EB02__03227.1687411822.jpg?c=2&imbypass=on" alt="Painting 1">
+                <div class="content">
+                    <div class="description">Beautiful Landscape - A serene view of nature.</div>
+                    <div class="date">Uploaded: 2024-12-01</div>
+                    <div class="earnings" data-earning="150">$150</div>
+                </div>
+                <div class="price">
+                    <label for="price">Price</label>
+                    <span>$150</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <img src="https://cdn11.bigcommerce.com/s-ekl27muf8u/images/stencil/1280x1280/products/114/114/Contemplation_Figure_Oil_Painting__64477.1557602071.jpg?c=2" alt="Painting 2">
+                <div class="content">
+                    <div class="description">Abstract Art - Expressing modern emotions.</div>
+                    <div class="date">Uploaded: 2024-11-20</div>
+                    <div class="earnings" data-earning="120">$120</div>
+                </div>
+                <div class="price">
+                    <label for="price">Price</label>
+                    <span>$120</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <img src="https://images.saatchiart.com/saatchi/1002575/art/11644323/10706565-NYRAJGIY-6.jpg" alt="Painting 3">
+                <div class="content">
+                    <div class="description">Portrait of a Woman - Capturing beauty.</div>
+                    <div class="date">Uploaded: 2024-11-18</div>
+                    <div class="earnings" data-earning="200">$200</div>
+                </div>
+                <div class="price">
+                    <label for="price">Price</label>
+                    <span>$200</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPjsJ-GnWN_Pi2HUGPoeG4PbdqHhe_L5WwJQ&s" alt="Painting 4">
+                <div class="content">
+                    <div class="description">Cityscape - The hustle and bustle of the city.</div>
+                    <div class="date">Uploaded: 2024-11-10</div>
+                    <div class="earnings" data-earning="175">$175</div>
+                </div>
+                <div class="price">
+                    <label for="price">Price</label>
+                    <span>$175</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Earnings Section -->
+        <div class="total-section">
+            Total Earnings: <span id="total-earnings">$0</span>
+        </div>
+    </div>
+
+    <script>
+        // Calculate total earnings
+        const earningsElements = document.querySelectorAll('.earnings');
+        let totalEarnings = 0;
+
+        earningsElements.forEach((earningEl) => {
+            const earning = parseFloat(earningEl.getAttribute('data-earning'));
+            totalEarnings += earning;
+        });
+
+        // Display total earnings
+        document.getElementById('total-earnings').textContent = `$${totalEarnings}`;
+    </script>
+</body>
+</html>

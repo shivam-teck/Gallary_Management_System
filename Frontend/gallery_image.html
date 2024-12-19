@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid View with Hover Info</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Gallery</h1>
+    <div class="topnav">
+      <a href="addto_cart.html" class="cart">
+            <i class="fas fa-shopping-cart cart-icon"></i> 
+        </a>
+      <a href="signup.html">Sign Up</a>
+      <a href="event_bid.html">Event</a>
+      <a href="contact.html">Contact</a>
+      <a href="artist.html">Artist</a>
+      <a href="gallery_image.html">Gallery</a>
+      <a class="active" href="index.html">Home</a>
+    </div>
+
+    <div class="grid-container">
+        <!-- Card 1 -->
+        <div class="card">
+            <img src="https://storage.googleapis.com/pod_public/1300/184060.jpg" alt="Artist Image">
+            <div class="card-info">
+                <h2>Jane Smith</h2>
+                <div class="artist-details">
+                    <p><strong>Age:</strong> 30</p>
+                    <p><strong>Artistic Style:</strong> Abstract</p>
+                    <p><strong>Experience:</strong> 10 years</p>
+                    <p><strong>Country:</strong> USA</p>
+                    <p><strong>Price:</strong> $500</p>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <img src="https://www.art-exclusive.de/images/Artikelbilder/1481/Pop%20art%20Portrait%20modern%20bunt%20-Peggy%20Liebenow.jpg" alt="Artist Image">
+            <div class="card-info">
+                <h2>John Doe</h2>
+                <div class="artist-details">
+                    <p><strong>Artistic Style:</strong> Realism</p>
+                    <p><strong>Price:</strong> $400</p>
+                </div>
+                <button onclick="addToCart('John Doe', 'Realism', 400)">Add to Cart</button>
+            </div>
+            <div class="like-container">
+                    <i class="fas fa-heart like-icon"></i>
+                    <span class="like-count">0 Likes</span>
+                </div>
+
+
+            
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <img src="https://media.artsper.com/artwork/2221817_1_grid.jpg" alt="Artist Image">
+            <div class="card-info">
+                <h2>Emily Clark</h2>
+                <div class="artist-details">
+                    <p><strong>Age:</strong> 35</p>
+                    <p><strong>Artistic Style:</strong> Impressionism</p>
+                    <p><strong>Experience:</strong> 15 years</p>
+                    <p><strong>Country:</strong> France</p>
+                    <p><strong>Price:</strong> $600</p>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <img src="https://media.artsper.com/artwork/2219821_1_m.jpg" alt="Artist Image">
+            <div class="card-info">
+                <h2>Michael Lee</h2>
+                <div class="artist-details">
+                    <p><strong>Age:</strong> 40</p>
+                    <p><strong>Artistic Style:</strong> Surrealism</p>
+                    <p><strong>Experience:</strong> 20 years</p>
+                    <p><strong>Country:</strong> Canada</p>
+                    <p><strong>Price:</strong> $700</p>
+                </div>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Trademark Section -->
+            <div class="trademark">
+                &copy; 2024 Srh Gallery. All rights reserved.
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="mailto:yourcompany@example.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact">
+                <p>Contact: +123 456 7890 | Email: <a href="mailto:srhcompany@gmail.com" style="color: white; text-decoration: none;">srhgallery@event.com</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+
+    function addToCart(artist, style, price) {
+            // Create an object to store the selected painting details
+            const cartItem = {
+                artist: artist,
+                style: style,
+                price: price
+            };
+
+            // Save the painting details to localStorage
+            localStorage.setItem('cartItem', JSON.stringify(cartItem));
+
+            // Redirect to the Add to Cart page
+            window.location.href = 'addto_cart.html';
+        }
+document.addEventListener("DOMContentLoaded", () => {
+    // Select all like icons and like count elements
+    const likeIcons = document.querySelectorAll(".like-icon");
+    
+    // Initialize like counts from localStorage if available
+    likeIcons.forEach((icon, index) => {
+        const likeCountElement = icon.nextElementSibling;
+        const storedLikeCount = localStorage.getItem(`likeCount_${index}`);
+        
+        // Set the initial like count from localStorage or default to 0
+        if (storedLikeCount) {
+            likeCountElement.textContent = `${storedLikeCount} Likes`;
+        } else {
+            likeCountElement.textContent = `0 Likes`;
+        }
+
+        // Add event listener to handle like button clicks
+        icon.addEventListener("click", () => {
+            // Toggle the 'liked' class for the icon
+            icon.classList.toggle("liked");
+
+            // Get the current like count
+            let currentCount = parseInt(likeCountElement.textContent.split(' ')[0]);
+
+            if (icon.classList.contains("liked")) {
+                currentCount += 1; // Increment count
+            } else {
+                currentCount -= 1; // Decrement count
+            }
+
+            // Update the like count in localStorage
+            localStorage.setItem(`likeCount_${index}`, currentCount);
+
+            // Update the like count on the page
+            likeCountElement.textContent = `${currentCount} Likes`;
+
+            // Store the most liked image in localStorage
+            const paintingImage = icon.closest('.card').querySelector('img').src;
+            let mostLiked = JSON.parse(localStorage.getItem('mostLikedPainting')) || { likes: 0 };
+            
+            // If the current painting has more likes, store it as the most liked
+            if (currentCount > mostLiked.likes) {
+                localStorage.setItem('mostLikedPainting', JSON.stringify({
+                    image: paintingImage,
+                    likes: currentCount
+                }));
+            }
+        });
+    });
+});
+</script>
+
+</html>

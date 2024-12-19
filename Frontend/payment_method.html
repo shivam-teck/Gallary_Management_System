@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <style>
+        /* Styling remains unchanged from your code */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .payment-form {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .payment-form h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .payment-form label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .payment-form input[type="text"],
+        .payment-form input[type="number"],
+        .payment-form input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .payment-form input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .payment-methods {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .payment-methods label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .payment-methods img {
+            margin-left: 8px;
+            height: 30px;
+        }
+
+        .payment-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .payment-form button:hover {
+            background-color: #003d82;
+        }
+
+        .remember-me {
+            margin-top: 10px;
+        }
+
+        .remember-me label {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-details,
+        .paypal-id,
+        .google-pay-id,
+        .qr-code {
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .qr-code {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            max-width: 200px;
+            margin: 10px auto;
+        }
+    </style>
+    <script>
+        // Function to toggle visibility of payment method details
+        function toggleDetails() {
+            const cardDetails = document.querySelector('.card-details');
+            const paypalId = document.querySelector('.paypal-id');
+            const googlePayId = document.querySelector('.google-pay-id');
+            const qrCode = document.querySelector('.qr-code');
+
+            const creditCardOption = document.querySelector('input[name="payment-method"][value="credit-card"]');
+            const paypalOption = document.querySelector('input[name="payment-method"][value="paypal"]');
+            const googlePayOption = document.querySelector('input[name="payment-method"][value="google-pay"]');
+
+            if (creditCardOption.checked) {
+                cardDetails.classList.add('visible');
+                paypalId.classList.remove('visible');
+                googlePayId.classList.remove('visible');
+                qrCode.classList.remove('visible');
+            } else if (paypalOption.checked) {
+                paypalId.classList.add('visible');
+                cardDetails.classList.remove('visible');
+                googlePayId.classList.remove('visible');
+                qrCode.classList.remove('visible');
+            } else if (googlePayOption.checked) {
+                googlePayId.classList.add('visible');
+                qrCode.classList.add('visible');
+                cardDetails.classList.remove('visible');
+                paypalId.classList.remove('visible');
+            }
+        }
+
+        // Function to redirect to the invoice page
+        function redirectToInvoice() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const artist = urlParams.get('artist');
+            const customer = urlParams.get('customer');
+            const price = urlParams.get('price');
+            const imageUrl = urlParams.get('imageUrl');
+
+            const url = new URL('invoice.html', window.location.href); // Redirect to Invoice Page
+            url.searchParams.set('artist', artist);
+            url.searchParams.set('customer', customer);
+            url.searchParams.set('price', price);
+            url.searchParams.set('imageUrl', imageUrl);
+            window.location.href = url;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const paymentOptions = document.querySelectorAll('input[name="payment-method"]');
+            paymentOptions.forEach(option => {
+                option.addEventListener('change', toggleDetails);
+            });
+
+            toggleDetails(); // Initialize visibility on page load
+        });
+    </script>
+</head>
+<body>
+    <form class="payment-form">
+        <h2>Payment</h2>
+        <p>All transactions are secure and encrypted.</p>
+
+        <div class="payment-methods">
+            <label>
+                <input type="radio" name="payment-method" value="credit-card" checked>
+                Credit Card
+                <img src="https://img.icons8.com/color/48/visa.png" alt="Visa">
+                <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard">
+                <img src="https://img.icons8.com/color/48/amex.png" alt="Amex">
+            </label>
+            <label>
+                <input type="radio" name="payment-method" value="paypal">
+                PayPal
+                <img src="https://img.icons8.com/color/48/paypal.png" alt="PayPal">
+            </label>
+            <label>
+                <input type="radio" name="payment-method" value="google-pay">
+                Google Pay
+                <img src="https://img.icons8.com/color/48/google-pay.png" alt="Google Pay">
+            </label>
+        </div>
+
+        <div class="card-details visible">
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+
+            <label for="expiry-date">Expiration Date (MM / YY)</label>
+            <input type="text" id="expiry-date" placeholder="MM / YY">
+
+            <label for="security-code">Security Code</label>
+            <input type="text" id="security-code" placeholder="123">
+
+            <label for="card-name">Name on Card</label>
+            <input type="text" id="card-name" placeholder="John Doe">
+
+            <label>
+                <input type="checkbox" checked>
+                Use shipping address as billing address
+            </label>
+        </div>
+
+        <div class="paypal-id">
+            <label for="paypal-id">Enter PayPal ID</label>
+            <input type="text" id="paypal-id" placeholder="example@paypal.com">
+        </div>
+
+        <div class="google-pay-id">
+            <label for="google-pay-id">Enter Google Pay ID</label>
+            <input type="text" id="google-pay-id" placeholder="example@google.com">
+        </div>
+
+        <div class="qr-code">
+            <label>Scan QR Code for Payment</label>
+            <img src="https://tse2.mm.bing.net/th?id=OIP.-9N4K3Syg-OgbET8dgDwqAHaHa&pid=Api&P=0&h=180" alt="QR Code">
+        </div>
+
+        <div class="remember-me">
+            <label>
+                <input type="checkbox">
+                Save my information for a faster checkout
+            </label>
+        </div>
+
+        <button type="button" onclick="redirectToInvoice()">Pay Now</button>
+    </form>
+</body>
+</html>

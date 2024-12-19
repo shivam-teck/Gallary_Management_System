@@ -1,0 +1,103 @@
+<!-- Add to Cart HTML File -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .painting-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .painting-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .details {
+            flex: 1;
+        }
+        .details h5 {
+            margin: 0;
+        }
+        .purchase-btn {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Cart</h1>
+
+    <!-- Painting 1 -->
+    <div class="painting-card">
+        <img id="painting1-img" src="https://i.redd.it/7mmlt6lax6zb1.jpg" alt="Painting 1">
+        <div class="details">
+            <h5>Artist: Leonardo da Vinci</h5>
+            <p>Painting Style: Crayon</p>
+            <p>Customer: John Doe</p>
+            <p>Price: $500</p>
+        </div>
+        <button class="btn btn-primary purchase-btn" onclick="purchase('Leonardo da Vinci', 'John Doe', 500, 'https://i.redd.it/7mmlt6lax6zb1.jpg')">Purchase</button>
+    </div>
+
+    <!-- Painting 2 -->
+    <div class="painting-card">
+        <img id="painting2-img" src="https://www.gioia.com.au/cdn/shop/products/Hand-Painted_554_AS_273228119_Colourful-Bird-white-background.jpg?v=1666287255&width=2048" alt="Painting 2">
+        <div class="details">
+            <h5>Artist: Vincent van Gogh</h5>
+            <p>Painting Style: Crayon</p>
+            <p>Customer: Jane Smith</p>
+            <p>Price: $750</p>
+        </div>
+        <button class="btn btn-primary purchase-btn" onclick="purchase('Vincent van Gogh', 'Jane Smith', 750, 'https://www.gioia.com.au/cdn/shop/products/Hand-Painted_554_AS_273228119_Colourful-Bird-white-background.jpg?v=1666287255&width=2048')">Purchase</button>
+    </div>
+
+    <!-- Painting 3 -->
+    <div class="painting-card">
+        <img id="painting3-img" src="https://cdn.carredartistes.com/products_images/prod_243519/c_100-x-100-cm-level-art-100x100-no-name-10029-21470-20240110-2-front-0.jpg" alt="Painting 3">
+        <div class="details">
+            <h5>Artist: Pablo Picasso</h5>
+            <p>Painting Style: Crayon</p>
+            <p>Customer: Alice Brown</p>
+            <p>Price: $1200</p>
+        </div>
+        <button class="btn btn-primary purchase-btn" onclick="purchase('Pablo Picasso', 'Alice Brown', 1200, 'https://cdn.carredartistes.com/products_images/prod_243519/c_100-x-100-cm-level-art-100x100-no-name-10029-21470-20240110-2-front-0.jpg')">Purchase</button>
+    </div>
+
+    <!-- Painting 4 -->
+    <div class="painting-card">
+        <img id="painting4-img" src="https://via.placeholder.com/150" alt="Painting 4">
+        <div class="details">
+            <h5>Artist: Claude Monet</h5>
+            <p>Painting Style: Crayon</p>
+            <p>Customer: Bob Johnson</p>
+            <p>Price: $900</p>
+        </div>
+        <button class="btn btn-primary purchase-btn" onclick="purchase('Claude Monet', 'Bob Johnson', 900, 'https://via.placeholder.com/150')">Purchase</button>
+    </div>
+</div>
+
+<script>
+   function purchase(artist, customer, price, imageUrl) {
+        const url = new URL('payment_method.html', window.location.href); // Redirect to Payment Page
+        url.searchParams.set('artist', artist);
+        url.searchParams.set('customer', customer);
+        url.searchParams.set('price', price);
+        url.searchParams.set('imageUrl', imageUrl);
+        window.location.href = url;
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events and Auction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .heading {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .topnav {
+          overflow: hidden;
+          background-color: #333;
+        }
+
+        .topnav a {
+          float: right;
+          color: #f2f2f2;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+
+        .topnav a.active {
+          background-color: #04AA6D;
+          color: white;
+        }
+        .container {
+            background-image: url('https://miro.medium.com/v2/resize:fit:1200/1*b8WS2iEvZCQYlXq46gKpqw.jpeg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            color: black;
+        }
+        .event-details, .ticket-info {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .main-container {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 1000px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .painting-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .painting {
+            border: 5px solid #ddd;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 10px;
+        }
+        .painting-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #333;
+        }
+        .user-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .user-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .user-info {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .bid-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bid-section input {
+            width: 80%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .timer, .user-timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d9534f;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .winner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            z-index: 9999;
+            animation: fadeOut 3s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .modal-content {
+            border-radius: 10px;
+        }
+        .modal-footer .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .modal-footer .btn-primary:hover {
+            background-color: #218838;
+        }
+        .auction-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(45deg, #ff6b6b, #f06595);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .auction-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .auction-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        .footer {
+            background-color: black; /* Black background */
+            color: white; /* White text */
+            padding: 20px 0; /* Spacing */
+            text-align: center; /* Center text alignment */
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto; /* Center the content */
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping for responsiveness */
+            justify-content: space-between; /* Spread items evenly */
+            align-items: center;
+        }
+
+        /* Section for trademark */
+        .footer .trademark {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Social media icons styling */
+        .social-icons {
+            display: flex;
+            gap: 15px; /* Spacing between icons */
+        }
+
+        .social-icons a {
+            color: white; /* Icon color */
+            font-size: 24px; /* Icon size */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* Change color on hover (blue) */
+        }
+
+        /* Contact details */
+        .contact {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="heading">
+        <h1>Events and Auction</h1>
+    </div>
+    <div class="topnav">
+      <a href="addto_cart.html" class="cart">
+            <i class="fas fa-shopping-cart cart-icon"></i> 
+        </a>
+      <a href="signup.html">Sign Up</a>
+      <a href="event_bid.html">Event</a>
+      <a href="contact.html">Contact</a>
+      <a href="artist.html">Artist</a>
+      <a href="gallery_image.html">Gallery</a>
+      <a class="active" href="index.html">Home</a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: Event Details -->
+            <div class="col-md-6">
+                <div class="event-details">
+                    <h3>Event Details</h3>
+                    <p><strong>Venue:</strong> 123 Main Street, City, Country</p>
+                    <p><strong>Email:</strong> contact@example.com</p>
+                    <p><strong>Date:</strong> December 20, 2024</p>
+                    <p><strong>Schedule:</strong> 10:00 AM - 5:00 PM</p>
+                    <p><strong>Service Center:</strong> +987 654 3210</p>
+                </div>
+            </div>
+
+            <!-- Right Column: Ticket Information -->
+            <div class="col-md-6">
+                <div class="ticket-info">
+                    <h4>Ticket Information</h4>
+                    <p>Tickets can only be purchased physically at the venue.</p>
+                    <ul>
+                        <li><strong>Child:</strong> €3</li>
+                        <li><strong>Student:</strong> €4 (Student ID mandatory)</li>
+                        <li><strong>Others:</strong> €5</li>
+                    </ul>
+                </div>
+                <a href="bid_register.html" class="auction-btn">Register for Auction</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="heading">
+        <h1>Painting Auction</h1>
+    </div>
+
+    <div class="main-container">
+        <!-- Painting Section -->
+        <div class="painting-container">
+            <img src="https://via.placeholder.com/400" alt="Painting" class="painting">
+            <p id="current-amount" class="painting-amount">Amount: €50</p>
+        </div>
+        
+        <!-- Users Section -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="user-card" id="user1">
+                    <img src="https://via.placeholder.com/80" alt="User 1">
+                    <div class="user-info">
+                        <p><strong>Name:</strong> User 1</p>
+                        <p><strong>Country:</strong> Germany</p>
+                    </div>
+                    <div class="bid-section">
+                        <input type="number" class="form-control bid-input" placeholder="Enter Bid Amount">
+                        <button class="btn btn-primary bid-button">Bid</button>
+                    </div>
+                    <div id="user1-timer" class="user-timer" style="display:none;">Time Remaining: 15:00</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="user-card" id="user2">
+                    <img src="https://via.placeholder.com/80" alt="User 2">
+                    <div class="user-info">
+                        <p><strong>Name:</strong> User 2</p>
+                        <p><strong>Country:</strong> France</p>
+                    </div>
+                    <div class="bid-section">
+                        <input type="number" class="form-control bid-input" placeholder="Enter Bid Amount">
+                        <button class="btn btn-primary bid-button">Bid</button>
+                    </div>
+                    <div id="user2-timer" class="user-timer" style="display:none;">Time Remaining: 15:00</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="user-card" id="user3">
+                    <img src="https://via.placeholder.com/80" alt="User 3">
+                    <div class="user-info">
+                        <p><strong>Name:</strong> User 3</p>
+                        <p><strong>Country:</strong> Italy</p>
+                    </div>
+                    <div class="bid-section">
+                        <input type="number" class="form-control bid-input" placeholder="Enter Bid Amount">
+                        <button class="btn btn-primary bid-button">Bid</button>
+                    </div>
+                    <div id="user3-timer" class="user-timer" style="display:none;">Time Remaining: 15:00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Auction Timer -->
+        <div class="timer" id="auction-timer">Time Remaining: 05:00</div>
+        <div id="bid-timer" class="timer" style="display:none;">Bid Time Remaining: 15:00</div>
+    </div>
+    <!-- Winner Announcement -->
+    <div id="winner" class="winner" style="display: none;"></div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Trademark Section -->
+            <div class="trademark">
+                &copy; 2024 Srh Gallery. All rights reserved.
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="mailto:yourcompany@example.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact">
+                <p>Contact: +123 456 7890 | Email: <a href="mailto:srhcompany@gmail.com" style="color: white; text-decoration: none;">srhgallery@event.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+<script>
+let auctionTimer = 300; // 5 minutes in seconds
+let bidTimer = 15; // 15 seconds per user
+let highestBid = 50; // Starting bid amount
+let highestBidder = null; // Track highest bidder's user card
+let auctionInterval = null; // Timer for auction countdown
+let bidInterval = null; // Timer for the current user's bid countdown
+let isFirstBidPlaced = false; // Flag to track if the first bid has been placed
+
+const auctionTimerElement = document.getElementById('auction-timer');
+const amountElement = document.getElementById('current-amount');
+const winnerElement = document.getElementById('winner');
+const userTimers = {
+    user1: document.getElementById('user1-timer'),
+    user2: document.getElementById('user2-timer'),
+    user3: document.getElementById('user3-timer'),
+};
+
+// Function to update the auction timer
+function updateAuctionTimer() {
+    const minutes = Math.floor(auctionTimer / 60).toString().padStart(2, '0');
+    const seconds = (auctionTimer % 60).toString().padStart(2, '0');
+    auctionTimerElement.textContent = `Time Remaining: ${minutes}:${seconds}`;
+}
+
+// Function to update individual user timers
+function updateUserTimer(userId, timeLeft) {
+    const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+    const seconds = (timeLeft % 60).toString().padStart(2, '0');
+    userTimers[userId].textContent = `Time Remaining: ${minutes}:${seconds}`;
+}
+
+// Function to reset all user timers
+function resetUserTimers() {
+    Object.keys(userTimers).forEach(userId => {
+        userTimers[userId].style.display = 'none';
+    });
+}
+
+// Function to declare the winner
+function declareWinner() {
+    clearInterval(auctionInterval); // Stop the auction timer
+    clearInterval(bidInterval); // Stop the bid timer
+    resetUserTimers(); // Hide all user timers
+
+    if (highestBidder) {
+        const winnerName = highestBidder.querySelector('.user-info p strong').textContent;
+        const winnerCountry = highestBidder.querySelector('.user-info p:nth-child(2)').textContent.split(': ')[1];
+        winnerElement.textContent = `${winnerName} (${winnerCountry}) has won the painting with €${highestBid}!`;
+    } else {
+        winnerElement.textContent = 'No winner!';
+    }
+
+    // Show the winner announcement
+    winnerElement.style.display = 'flex';
+
+    // Update the auction timer to display "Bid is closed for today"
+    auctionTimerElement.textContent = "Bid is closed for today";
+
+    // Hide the winner announcement after 3 seconds
+    setTimeout(() => {
+        winnerElement.style.display = 'none';
+    }, 3000);
+}
+
+// Function to start the bid timer for all users
+function startBidTimerForAllUsers(latestBidderId) {
+    // Reset and hide all user timers
+    resetUserTimers();
+    clearInterval(bidInterval); // Clear the previous bid interval
+
+    let timeLeft = bidTimer;
+
+    // Show the timer for all users
+    Object.keys(userTimers).forEach(userId => {
+        userTimers[userId].style.display = 'block';
+        updateUserTimer(userId, timeLeft);
+    });
+
+    // Start a synchronized countdown
+    bidInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(bidInterval);
+            declareWinner(); // Declare the highest bidder as the winner
+        } else {
+            timeLeft--;
+            Object.keys(userTimers).forEach(userId => {
+                updateUserTimer(userId, timeLeft);
+            });
+        }
+    }, 1000);
+}
+
+// Function to handle a new bid
+function handleNewBid(userCard, bidAmount) {
+    const userId = userCard.id;
+
+    if (bidAmount > highestBid) {
+        highestBid = bidAmount;
+        highestBidder = userCard;
+        amountElement.textContent = `Amount: €${highestBid}`;
+
+        // Reset the 15-second timer for all users
+        startBidTimerForAllUsers(userId);
+    } else {
+        alert('Your bid must be higher than the current highest bid!');
+    }
+}
+
+// Function to start the auction timer
+function startAuctionTimer() {
+    auctionInterval = setInterval(() => {
+        if (auctionTimer <= 0) {
+            clearInterval(auctionInterval);
+            clearInterval(bidInterval);
+            resetUserTimers();
+            declareWinner(); // Declare winner when auction timer ends
+        } else {
+            auctionTimer--;
+            updateAuctionTimer();
+        }
+    }, 1000);
+}
+
+// Function to set up bidding functionality
+function setupBidding() {
+    const bidButtons = document.querySelectorAll('.bid-button');
+    bidButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const userCard = e.target.closest('.user-card');
+            const bidInput = userCard.querySelector('.bid-input');
+            const bidAmount = parseFloat(bidInput.value);
+
+            if (!isFirstBidPlaced) {
+                isFirstBidPlaced = true;
+                startAuctionTimer(); // Start auction timer when the first bid is placed
+            }
+
+            handleNewBid(userCard, bidAmount);
+        });
+    });
+}
+
+
+// Initialize timers and load the most liked painting
+updateAuctionTimer();
+setupBidding();
+loadMostLikedPainting(); // Call the function to load the image when the page loads
+</script>
+
+</body>
+</html>

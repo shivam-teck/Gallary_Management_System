@@ -1,0 +1,578 @@
+.heading_srh{
+
+	text-align: center;
+	color:#ff6347
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+/* Basic styling for the dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the dropdown button (smaller size) */
+.dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 4px 8px; /* Reduced padding for a smaller button */
+    font-size: 14px; /* Reduced font size */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Optional, to round the corners */
+    margin-bottom: 3px;
+    margin-left: 3px;
+}
+
+/* Style for the dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 4px 8px;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+/* Change the background color of links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Display the dropdown content when hovering the button */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style for the dropdown button on hover */
+.dropdown:hover .dropbtn {
+    background-color: #ddd;
+    color: black;
+}
+
+video {
+            width: 100%;
+            height: 600px;
+            object-fit: cover; /* Optional: Ensures video covers the screen without distorting */
+            margin-top: 2px;
+        }
+
+ .overlay-text {
+            position: absolute;
+            top: 50%; /* Align vertically */
+            left: -100%; /* Start off-screen */
+            transform: translateY(-50%); /* Center text vertically */
+            color: white; /* White text color */
+            font-size: 70px ; /* Large text size */
+            font-family: "Playfair Display SC", serif; /* Font style */
+            font-weight: 400; /* Make the text bold */
+            text-align: left; /* Align text to the left */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for better contrast */
+            animation: slideIn 2s ease-out forwards; /* Slide in animation */
+        }
+
+        /* Keyframes for sliding text in from the left */
+        @keyframes slideIn {
+            from {
+                left: -100%; /* Start off-screen */
+            }
+            to {
+                left: 2%; /* End position */
+            }
+        }
+
+        .ribbon-container {
+            position: relative;
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            overflow: hidden;
+            white-space: nowrap;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ribbon-text {
+            display: inline-block;
+            animation: scroll 50s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+.artist_one {
+
+
+}
+
+#picinfo_two {
+	margin-top: 20px;
+}
+
+.Location{
+	text-align: center;
+	margin-top: 20px;
+	padding-bottom: 20px;
+	color:#ff6347
+}
+
+.footer {
+            background-color: black; /* Black background */
+            color: white; /* White text */
+            padding: 20px 0; /* Spacing */
+            text-align: center; /* Center text alignment */
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto; /* Center the content */
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping for responsiveness */
+            justify-content: space-between; /* Spread items evenly */
+            align-items: center;
+        }
+
+        /* Section for trademark */
+        .footer .trademark {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Social media icons styling */
+        .social-icons {
+            display: flex;
+            gap: 15px; /* Spacing between icons */
+        }
+
+        .social-icons a {
+            color: white; /* Icon color */
+            font-size: 24px; /* Icon size */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* Change color on hover (blue) */
+        }
+
+        /* Contact details */
+        .contact {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /*****************************************SignUp************************************/
+
+
+/* Container for the form with a white background */
+
+
+/* Form container styling */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Form header styling */
+.form-header {
+    background-color: #343a40; /* Dark header for contrast */
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Margin for role selection */
+.role-select {
+    margin-bottom: 20px;
+}
+
+/* Styles for artist fields section */
+.artist-fields {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Full-width styling for inputs and selects */
+select, input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Styling for country selection dropdown */
+.country-flag {
+    margin-right: 10px;
+}
+
+.country-option {
+    display: flex;
+    align-items: center;
+}
+
+.country-name {
+    margin-left: 10px;
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Text styling for the "already have an account" section */
+.text-center {
+    margin-top: 20px;
+}
+
+.text-center p {
+    font-size: 14px;
+}
+
+.text-center a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for the form labels */
+.form-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Additional margin and padding adjustments */
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.d-grid {
+    margin-top: 20px;
+}
+
+/**************************************Login***************************/
+
+
+
+/* Background Image Styling */
+.background-image {
+    background: url('background-image.jpg') no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container Styling */
+#login_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Card Styling */
+.card {
+    background: rgba(255, 255, 255, 0.9); /* Transparent white */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Header */
+.card-header {
+    background-color: #343a40;
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.card-header p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+/* Card Body */
+.card-body {
+    padding: 2rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+.card-footer {
+    background: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.card-footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.card-footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media Query for Smaller Devices */
+@media (max-width: 576px) {
+    .card {
+        width: 90%;
+    }
+
+    .card-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+    }
+}
+
+/*****************************Gallery Image ********************/
+
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Grid container */
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    /* Card styles */
+    .card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        height: 500px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        background-color: #f0f0f0;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover img {
+        transform: scale(1.1); /* Zoom effect */
+    }
+
+    /* Hover overlay */
+    .card-info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 20px;
+    }
+
+    .card:hover .card-info {
+        opacity: 1; /* Show on hover */
+    }
+
+    .card-info h2 {
+        margin-bottom: 10px;
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    /* Artist details */
+    .artist-details {
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        display: block; /* Ensures each item is on a new line */
+    }
+
+    .artist-details p {
+        margin: 5px 0;
+        font-size: 1em;
+    }
+
+    .artist-details p strong {
+        font-weight: bold;
+    }
+
+    /* Button style */
+    .card-info button {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #ffcc00;
+        color: #333;
+        font-size: 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-info button:hover {
+        background-color: #ffaa00;
+    }
+
+    /* Like container styles */
+    .like-container {
+    position: absolute;
+    bottom: 10px; /* Place it below the image */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it stays on top of the overlay */
+    background: rgba(255, 255, 255, 0.8); /* Optional: Add a subtle background */
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.like-icon {
+    color: #ddd;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.like-icon.liked {
+    color: red; /* Change color when liked */
+}
+
+.like-count {
+    font-size: 1em;
+    color: #333;
+}
